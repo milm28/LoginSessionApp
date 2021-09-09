@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="mainContainer">
+    <div class="row">
+        <div class="col-md-6">
+            Users Preview
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tbl">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>IsActive</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script>
+    var oTable = $('#tbl').dataTable({
+        "bServerSide": true, /*znaci da je server side rendering*/
+        "sAjaxSource": "/Users/GetUserList", /*Endpoint koji gadjamo za dobavljanje podataka*/
+        "sServerMethod": "GET", /* Method Type -> Get */
+        "aoColumns":
+            [
+                //{"data" : "ime"} za svaku kolonu
+                { "mData": "Username" },
+                { "mData": "Name" },
+                { "mData": "Surname" },
+                { "mData": "IsActive" },
+                {
+                    "mData": function (o)
+                    {
+                        //renderovanje dugmeta za edit funkcionalnost
+                        return "<a href = '/Users/Edit?Id =" + o.Id + "' class='btn btn-info'>Edit</a>";
+                    }
+                }
+            ]
+    });
+</script>
+
